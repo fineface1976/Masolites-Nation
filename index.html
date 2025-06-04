@@ -1437,5 +1437,31 @@
     </script> 
  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 <script src="scripts/wallet.js"></script>
+<!-- Flutterwave Payment Script -->
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+// Add this function INSIDE your existing <script> tag (around line 1600)
+function completePayment(amount, currency = 'NGN') {
+  FlutterwaveCheckout({
+    public_key: "FLWPUBK_TEST-XXXXXXXXXXXXXXXXXXXX", // Replace with your key
+    tx_ref: `MZL-${Date.now()}`,
+    amount: amount,
+    currency: currency,
+    payment_options: "card, banktransfer, ussd",
+    customer: {
+      email: currentUser.email,
+      phone_number: currentUser.phone,
+      name: currentUser.name
+    },
+    callback: function(response) {
+      if (response.status === 'successful') {
+        alert("Payment successful!");
+        // Process payment (this function already exists in your code)
+        processPaymentSuccess(amount); 
+      }
+    }
+  });
+}
+     </script>
 </body>
 </html>
