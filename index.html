@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MASOLITES NATION</title>
+    <title>ECOMAS - Masolites Nation</title>
     <style>
         :root {
-            --primary: #4a148c;
-            --secondary: #ff6f00;
-            --accent: #ffab40;
-            --text: #f5f5f5;
-            --bg: #121212;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --error: #f44336;
+            --primary: #0a2463;       /* Navy Blue */
+            --secondary: #3e92cc;     /* Sky Blue */
+            --accent: #d8f1a0;       /* Lime Green */
+            --accent-dark: #a8d46e;  /* Darker Lime */
+            --warning: #ff9f1c;      /* Orange */
+            --error: #ff3e41;        /* Red */
+            --success: #2ecc71;      /* Green */
+            --text: #ffffff;         /* White */
+            --text-dark: #333333;     /* Dark Gray */
+            --card-bg: rgba(62, 146, 204, 0.2); /* Light Blue Card */
+            --bg: #0a2463;           /* Navy Background */
         }
         
         * {
@@ -21,42 +24,49 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
         }
         
         body {
             background-color: var(--bg);
             color: var(--text);
-            overflow-x: hidden;
+            overflow: hidden;
             touch-action: manipulation;
             height: 100vh;
+            width: 100vw;
             display: flex;
             flex-direction: column;
+            position: fixed;
         }
         
+        /* Header Styles */
         header {
-            background: linear-gradient(135deg, var(--primary), #6a1b9a);
-            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), #1a3b7a);
+            padding: 0.8rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 10;
+            height: 120px;
         }
         
         h1 {
             font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--accent), var(--secondary));
+            margin-bottom: 0.3rem;
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .tagline {
             font-size: 0.9rem;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .badge-container {
@@ -69,108 +79,128 @@
         .badge {
             font-size: 1.2rem;
             cursor: default;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
         }
         
+        /* Main Content */
         main {
-            padding: 1rem;
+            padding: 0.8rem;
             flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
-        .stats-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        
-        .stat-card:active {
-            transform: scale(0.98);
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0.5rem 0;
-            color: var(--accent);
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-        
-        .mining-section {
-            background: rgba(74, 20, 140, 0.2);
+        /* Section Styling */
+        .section {
+            width: 100%;
+            max-width: 100%;
+            background: var(--card-bg);
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 111, 0, 0.2);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .mining-header {
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Introduction Section */
+        .intro-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        /* ICO Countdown Section */
+        .ico-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--accent);
+        }
+        
+        .ico-timer {
+            font-size: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(216, 241, 160, 0.5);
+        }
+        
+        .ico-progress-container {
+            margin: 1rem 0;
+        }
+        
+        .ico-progress-label {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .mining-title {
-            font-size: 1.2rem;
-            color: var(--secondary);
-        }
-        
-        .mining-status {
-            display: inline-block;
-            padding: 0.3rem 0.6rem;
-            border-radius: 20px;
+            margin-bottom: 0.5rem;
             font-size: 0.8rem;
-            font-weight: bold;
         }
         
-        .status-active {
-            background-color: var(--success);
-            color: white;
+        .ico-progress {
+            height: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
         }
         
-        .status-inactive {
-            background-color: var(--error);
-            color: white;
+        .ico-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+            width: 35%;
+            border-radius: 5px;
+        }
+        
+        /* Mining Section */
+        .mining-section {
+            border: 2px solid var(--secondary);
         }
         
         .mining-timer {
             font-size: 2rem;
             text-align: center;
             margin: 1rem 0;
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
             letter-spacing: 2px;
+            color: var(--accent);
         }
         
-        .mining-progress {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+        .mining-stats {
+            display: flex;
+            justify-content: space-around;
             margin: 1rem 0;
-            overflow: hidden;
         }
         
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            width: 0%;
-            transition: width 0.5s;
+        .mining-stat {
+            text-align: center;
         }
         
+        .mining-stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .mining-stat-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+        
+        /* Button Styles */
         .btn {
             display: block;
             width: 100%;
@@ -184,111 +214,136 @@
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
         .btn-primary {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+            color: var(--text-dark);
+            font-weight: bold;
         }
         
         .btn-primary:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(to right, var(--warning), #ff7b00);
+            color: white;
         }
         
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1);
             color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .ico-section {
-            background: rgba(33, 150, 243, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(33, 150, 243, 0.2);
+        .btn-toggle {
+            background: var(--warning);
+            color: white;
         }
         
-        .ico-title {
-            font-size: 1.2rem;
-            color: #2196f3;
-            margin-bottom: 1rem;
-            text-align: center;
+        .btn-toggle.active {
+            background: var(--success);
         }
         
-        .ico-timer {
-            font-size: 1.8rem;
-            text-align: center;
-            margin: 1rem 0;
-            font-family: monospace;
-            color: #2196f3;
-        }
-        
-        .ico-progress-container {
-            margin: 1.5rem 0;
-        }
-        
-        .ico-progress-label {
+        /* Auth Screens */
+        .auth-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: 1000;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .auth-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auth-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            text-align: center;
+        }
+        
+        .auth-form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .auth-label {
+            display: block;
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
         }
         
-        .ico-progress {
-            height: 10px;
-            background: rgba(33, 150, 243, 0.2);
-            border-radius: 5px;
-            overflow: hidden;
+        .auth-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
         }
         
-        .ico-progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, #1976d2, #2196f3);
-            width: 35%;
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--accent);
         }
         
-        .news-section {
-            margin-bottom: 1.5rem;
+        .auth-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
         }
         
-        .news-title {
-            font-size: 1.2rem;
+        .auth-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .welcome-icon {
+            font-size: 4rem;
             margin-bottom: 1rem;
             color: var(--accent);
         }
         
-        .news-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
+        .welcome-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
         }
         
-        .news-item-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
-        }
-        
-        .news-item-date {
-            font-size: 0.7rem;
-            opacity: 0.6;
-            margin-bottom: 0.5rem;
-        }
-        
-        .news-item-content {
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        
+        /* Footer */
         footer {
             background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
+            padding: 0.8rem;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
@@ -297,316 +352,438 @@
             justify-content: center;
             gap: 1rem;
             margin-top: 0.5rem;
+            flex-wrap: wrap;
         }
         
         .footer-link {
             color: var(--accent);
             text-decoration: none;
+            font-size: 0.7rem;
         }
         
-        /* Admin panel styles (hidden by default) */
+        /* Admin Panel (hidden) */
         .admin-panel {
             display: none;
-            background: rgba(0, 0, 0, 0.7);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            z-index: 100;
-            padding: 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            padding: 1rem;
             overflow-y: auto;
         }
         
-        .admin-content {
-            background: var(--bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--primary);
-        }
-        
-        .admin-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--secondary);
-            text-align: center;
-        }
-        
-        .admin-form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .admin-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .admin-input {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 1rem;
-        }
-        
-        .admin-btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .admin-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--error);
-            color: white;
-            border: none;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Responsive adjustments */
+        /* Responsive Adjustments */
         @media (max-width: 480px) {
             h1 {
                 font-size: 1.5rem;
             }
             
-            .tagline {
-                font-size: 0.8rem;
+            .section-title {
+                font-size: 1.1rem;
             }
             
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .mining-timer, .ico-timer {
+            .ico-timer, .mining-timer {
                 font-size: 1.5rem;
+            }
+            
+            .auth-container {
+                padding: 1.5rem;
             }
         }
         
-        /* No scroll behavior */
-        body.no-scroll {
-            overflow: hidden;
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mb-2 {
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>MASOLITES NATION</h1>
-        <div class="tagline">The Future of Community Mining</div>
-        <div class="badge-container">
-            <span class="badge">🥉</span>
-            <span class="badge">🥈</span>
-            <span class="badge">🥇</span>
-            <span class="badge">🎀</span>
-        </div>
-    </header>
-    
-    <main>
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-label">Total Members</div>
-                <div class="stat-value">1,248</div>
+    <!-- Authentication Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container" id="loginContainer">
+            <h2 class="auth-title">WELCOME TO ECOMAS</h2>
+            <p class="text-center mb-2">Please sign in to continue</p>
+            
+            <div class="auth-form-group">
+                <input type="email" class="auth-input" id="loginEmail" placeholder="Email Address" required>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Active Miners</div>
-                <div class="stat-value">893</div>
+            
+            <div class="auth-form-group">
+                <input type="password" class="auth-input" id="loginPassword" placeholder="Password" required>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Total Mined</div>
-                <div class="stat-value">₦4,821,350</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Today's Yield</div>
-                <div class="stat-value">₦127,840</div>
+            
+            <button class="btn btn-primary" id="loginBtn">SIGN IN</button>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="#" class="auth-link" id="showRegister">Sign Up</a>
             </div>
         </div>
         
-        <section class="mining-section">
-            <div class="mining-header">
-                <div class="mining-title">Mining Session</div>
-                <div class="mining-status status-active">ACTIVE</div>
+        <div class="auth-container hidden" id="registerContainer">
+            <h2 class="auth-title">CREATE ACCOUNT</h2>
+            <p class="text-center mb-2">Join Masolites Nation</p>
+            
+            <div class="auth-form-group">
+                <input type="email" class="auth-input" id="registerEmail" placeholder="Email Address" required>
             </div>
             
-            <div class="mining-timer" id="miningTimer">24:00:00.000</div>
-            
-            <div class="mining-progress">
-                <div class="progress-bar" id="miningProgress"></div>
+            <div class="auth-form-group">
+                <input type="password" class="auth-input" id="registerPassword" placeholder="Create Password" required>
             </div>
             
-            <button class="btn btn-primary" id="startMiningBtn">START MINING</button>
-            <button class="btn btn-secondary" id="claimBtn">CLAIM REWARDS (₦1,250)</button>
-        </section>
-        
-        <section class="ico-section">
-            <div class="ico-title">ICO PHASE 1 ENDS IN</div>
-            <div class="ico-timer" id="icoTimer">07:23:41:15</div>
-            
-            <div class="ico-progress-container">
-                <div class="ico-progress-label">
-                    <span>Progress: 35%</span>
-                    <span>Target: ₦10,000,000</span>
-                </div>
-                <div class="ico-progress">
-                    <div class="ico-progress-bar"></div>
-                </div>
+            <div class="auth-form-group">
+                <input type="password" class="auth-input" id="registerConfirm" placeholder="Confirm Password" required>
             </div>
             
-            <button class="btn btn-primary">JOIN ICO NOW</button>
-        </section>
-        
-        <section class="news-section">
-            <div class="news-title">LATEST UPDATES</div>
-            
-            <div class="news-item">
-                <div class="news-item-title">System Maintenance Completed</div>
-                <div class="news-item-date">June 5, 2024 | 14:30 WAT</div>
-                <div class="news-item-content">
-                    The scheduled maintenance has been successfully completed. All mining systems are now operational at 100% capacity.
-                </div>
+            <div class="auth-form-group">
+                <input type="text" class="auth-input" id="registerPhone" placeholder="Phone Number (Admin Activated)" disabled>
             </div>
             
-            <div class="news-item">
-                <div class="news-item-title">New Membership Badges Introduced</div>
-                <div class="news-item-date">June 3, 2024 | 09:15 WAT</div>
-                <div class="news-item-content">
-                    We've added new achievement badges for top miners. Check your profile to see if you've earned one!
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <footer>
-        <div>© 2024 Masolites Nation. All rights reserved.</div>
-        <div class="footer-links">
-            <a href="#" class="footer-link">Terms</a>
-            <a href="#" class="footer-link">Privacy</a>
-            <a href="#" class="footer-link">Contact</a>
-            <a href="/admin" class="footer-link">Admin</a>
-        </div>
-    </footer>
-    
-    <!-- Admin Panel (hidden) -->
-    <div class="admin-panel" id="adminPanel">
-        <button class="admin-close" id="adminCloseBtn">×</button>
-        <div class="admin-content">
-            <h2 class="admin-title">ADMIN CONTROL PANEL</h2>
+            <button class="btn btn-primary" id="registerBtn">REGISTER</button>
             
-            <div class="admin-form-group">
-                <label class="admin-label">Mining Session Duration (hours)</label>
-                <input type="number" class="admin-input" value="24" min="1" max="72">
-            </div>
-            
-            <div class="admin-form-group">
-                <label class="admin-label">Daily Yield (₦)</label>
-                <input type="number" class="admin-input" value="1250" min="100" step="50">
-            </div>
-            
-            <div class="admin-form-group">
-                <label class="admin-label">ICO End Date</label>
-                <input type="datetime-local" class="admin-input">
-            </div>
-            
-            <div class="admin-form-group">
-                <label class="admin-label">System Announcement</label>
-                <textarea class="admin-input" rows="4"></textarea>
-            </div>
-            
-            <div class="admin-btn-group">
-                <button class="btn btn-primary">SAVE CHANGES</button>
-                <button class="btn btn-secondary">CANCEL</button>
+            <div class="auth-footer">
+                Already have an account? <a href="#" class="auth-link" id="showLogin">Sign In</a>
             </div>
         </div>
     </div>
     
+    <!-- Welcome Screen (hidden initially) -->
+    <div class="auth-screen hidden" id="welcomeScreen">
+        <div class="auth-container">
+            <div class="welcome-icon">🎉</div>
+            <h2 class="auth-title">CONGRATULATIONS!</h2>
+            <p class="welcome-message">
+                Welcome to MASOLITES Nation - ECOMAS.<br>
+                Let's Build Trust & a Better Society together.<br>
+                You can Start Mining MAZOL Now!
+            </p>
+            <button class="btn btn-primary" id="continueBtn">CONTINUE TO PLATFORM</button>
+        </div>
+    </div>
+    
+    <!-- Main App (hidden initially) -->
+    <div class="hidden" id="appContainer">
+        <header>
+            <h1>MASOLITES NATION</h1>
+            <div class="tagline">Building Trust & A Better Society Together</div>
+            <div class="badge-container">
+                <span class="badge">🥉</span>
+                <span class="badge">🥈</span>
+                <span class="badge">🥇</span>
+                <span class="badge">🎁</span>
+            </div>
+        </header>
+        
+        <main>
+            <!-- Introduction Section -->
+            <section class="section">
+                <h2 class="section-title">WELCOME TO ECOMAS</h2>
+                <p class="intro-text">
+                    Economic Community of MASOLITES. Masolite is coined from 'Masses Solidarity'. 
+                    Making things easier for ourselves (the people) is the concept. As a Masolite 
+                    you can create your online store & offer trusted products and services but 
+                    with honesty & highest discounts to fellow Masolites. The platform itself 
+                    offers trusted products & services. This platform is powered by Masses Freedom MPCS.
+                </p>
+            </section>
+            
+            <!-- ICO Section -->
+            <section class="section ico-section">
+                <h2 class="section-title">120 DAYS PRIVATE SALE ONLY</h2>
+                <div class="ico-timer" id="icoTimer">120:00:00:00</div>
+                
+                <div class="ico-progress-container">
+                    <div class="ico-progress-label">
+                        <span>Progress: 35%</span>
+                        <span>Target: ₦10,000,000</span>
+                    </div>
+                    <div class="ico-progress">
+                        <div class="ico-progress-bar"></div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary">BUY MAZOL TOKENS NOW</button>
+            </section>
+            
+            <!-- Mining Section -->
+            <section class="section mining-section">
+                <h2 class="section-title">MINING STATION</h2>
+                <div class="mining-timer" id="miningTimer">24:00:00.000</div>
+                
+                <div class="mining-stats">
+                    <div class="mining-stat">
+                        <div class="mining-stat-value" id="tokensMined">0</div>
+                        <div class="mining-stat-label">Tokens Mined</div>
+                    </div>
+                    <div class="mining-stat">
+                        <div class="mining-stat-value" id="miningSpeed">0</div>
+                        <div class="mining-stat-label">Mining Speed (ms)</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-toggle" id="miningToggleBtn">START MINING</button>
+                <button class="btn btn-secondary" id="claimBtn">CLAIM REWARDS</button>
+            </section>
+            
+            <!-- Membership Info -->
+            <section class="section">
+                <h2 class="section-title">MEMBERSHIP BENEFITS</h2>
+                <p class="intro-text">
+                    <strong>Note:</strong> Only paid membership registration of ₦1000 are allowed to offer products and services. 
+                    Free members cannot offer products and services. To offer products and services, you must be a paid member.
+                </p>
+                <button class="btn btn-primary" id="upgradeBtn">UPGRADE MEMBERSHIP</button>
+            </section>
+        </main>
+        
+        <footer>
+            <div>© 2024 ECOMAS - Masolites Nation. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Contact</a>
+                <button class="footer-link" id="logoutBtn">Sign Out</button>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Admin Panel (hidden) -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="auth-container">
+            <h2 class="auth-title">ADMIN LOGIN</h2>
+            <div class="auth-form-group">
+                <input type="password" class="auth-input" id="adminPassword" placeholder="Admin Password" required>
+            </div>
+            <button class="btn btn-primary" id="adminLoginBtn">LOGIN</button>
+            <button class="btn btn-secondary" id="adminCloseBtn">CANCEL</button>
+        </div>
+    </div>
+    
     <script>
-        // Mining System
+        // DOM Elements
+        const authScreen = document.getElementById('authScreen');
+        const loginContainer = document.getElementById('loginContainer');
+        const registerContainer = document.getElementById('registerContainer');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const appContainer = document.getElementById('appContainer');
+        const adminPanel = document.getElementById('adminPanel');
+        
+        // Auth Elements
+        const showRegister = document.getElementById('showRegister');
+        const showLogin = document.getElementById('showLogin');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const continueBtn = document.getElementById('continueBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        // Admin Elements
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const adminCloseBtn = document.getElementById('adminCloseBtn');
+        
+        // Mining Elements
+        const miningToggleBtn = document.getElementById('miningToggleBtn');
         const miningTimer = document.getElementById('miningTimer');
-        const miningProgress = document.getElementById('miningProgress');
-        const startMiningBtn = document.getElementById('startMiningBtn');
+        const tokensMined = document.getElementById('tokensMined');
+        const miningSpeed = document.getElementById('miningSpeed');
         const claimBtn = document.getElementById('claimBtn');
         
-        let miningInterval;
-        let miningSeconds = 24 * 60 * 60; // 24 hours in seconds
-        let miningMilliseconds = 0;
-        let isMining = false;
+        // ICO Elements
+        const icoTimer = document.getElementById('icoTimer');
         
-        function updateMiningTimer() {
-            miningMilliseconds -= 10;
+        // State Management
+        let currentUser = null;
+        let isMining = false;
+        let miningInterval;
+        let miningStartTime;
+        let tokens = 0;
+        let miningSpeedValue = 0;
+        
+        // Registered users (in production, this would be server-side)
+        const registeredUsers = [];
+        
+        // Event Listeners
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginContainer.classList.add('hidden');
+            registerContainer.classList.remove('hidden');
+        });
+        
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerContainer.classList.add('hidden');
+            loginContainer.classList.remove('hidden');
+        });
+        
+        loginBtn.addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
             
-            if (miningMilliseconds < 0) {
-                miningMilliseconds = 990;
-                miningSeconds--;
-            }
-            
-            if (miningSeconds < 0) {
-                stopMining();
+            // Basic validation
+            if (!email || !password) {
+                alert('Please enter both email and password');
                 return;
             }
             
-            const hours = Math.floor(miningSeconds / 3600);
-            const minutes = Math.floor((miningSeconds % 3600) / 60);
-            const seconds = miningSeconds % 60;
+            // Check if user exists (in production, this would be server-side)
+            const user = registeredUsers.find(u => u.email === email && u.password === password);
             
-            miningTimer.textContent = 
-                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${miningMilliseconds.toString().padStart(3, '0')}`;
+            if (user) {
+                currentUser = user;
+                authScreen.classList.add('hidden');
+                welcomeScreen.classList.remove('hidden');
+            } else {
+                alert('Invalid email or password');
+            }
+        });
+        
+        registerBtn.addEventListener('click', () => {
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirm').value;
             
-            const progressPercent = 100 - ((miningSeconds * 1000 + miningMilliseconds) / (24 * 60 * 60 * 1000) * 100);
-            miningProgress.style.width = `${progressPercent}%`;
-        }
+            // Basic validation
+            if (!email || !password || !confirm) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            if (password !== confirm) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Check if email already registered
+            if (registeredUsers.some(u => u.email === email)) {
+                alert('This email is already registered');
+                return;
+            }
+            
+            // Register user (in production, this would be server-side)
+            const newUser = {
+                email,
+                password,
+                membership: 'free', // Default to free membership
+                badge: '🎁' // Gift badge for free members
+            };
+            
+            registeredUsers.push(newUser);
+            currentUser = newUser;
+            
+            // Show welcome screen
+            authScreen.classList.add('hidden');
+            welcomeScreen.classList.remove('hidden');
+        });
+        
+        continueBtn.addEventListener('click', () => {
+            welcomeScreen.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+        });
+        
+        logoutBtn.addEventListener('click', () => {
+            currentUser = null;
+            appContainer.classList.add('hidden');
+            authScreen.classList.remove('hidden');
+            loginContainer.classList.remove('hidden');
+            registerContainer.classList.add('hidden');
+            
+            // Reset form fields
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('registerConfirm').value = '';
+        });
+        
+        // Mining System
+        miningToggleBtn.addEventListener('click', () => {
+            if (isMining) {
+                stopMining();
+            } else {
+                startMining();
+            }
+        });
+        
+        claimBtn.addEventListener('click', () => {
+            if (tokens > 0) {
+                alert(`Successfully claimed ${tokens} MAZOL tokens!`);
+                tokens = 0;
+                tokensMined.textContent = '0';
+            } else {
+                alert('No tokens to claim yet. Start mining first!');
+            }
+        });
         
         function startMining() {
             if (isMining) return;
             
             isMining = true;
-            startMiningBtn.textContent = 'MINING IN PROGRESS';
-            startMiningBtn.disabled = true;
+            miningStartTime = Date.now();
+            miningToggleBtn.textContent = 'MINING (ON)';
+            miningToggleBtn.classList.add('active');
             
-            // Reset timer to 24 hours
-            miningSeconds = 24 * 60 * 60;
-            miningMilliseconds = 0;
-            
-            miningInterval = setInterval(updateMiningTimer, 10);
+            // Start mining interval (updates every 100ms for smoother display)
+            miningInterval = setInterval(() => {
+                const now = Date.now();
+                const elapsed = now - miningStartTime;
+                const remaining = 24 * 60 * 60 * 1000 - elapsed;
+                
+                // Update timer display
+                if (remaining <= 0) {
+                    stopMining();
+                    return;
+                }
+                
+                const hours = Math.floor(remaining / (1000 * 60 * 60));
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                const milliseconds = remaining % 1000;
+                
+                miningTimer.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+                
+                // Calculate mining speed (random for demo)
+                miningSpeedValue = Math.floor(Math.random() * 100) + 50;
+                miningSpeed.textContent = miningSpeedValue;
+                
+                // Add tokens (cumulative)
+                tokens += 0.01; // Small increment for demo
+                tokensMined.textContent = tokens.toFixed(2);
+                
+            }, 100);
         }
         
         function stopMining() {
+            if (!isMining) return;
+            
             clearInterval(miningInterval);
             isMining = false;
+            miningToggleBtn.textContent = 'START MINING';
+            miningToggleBtn.classList.remove('active');
             miningTimer.textContent = '24:00:00.000';
-            miningProgress.style.width = '0%';
-            startMiningBtn.textContent = 'START MINING';
-            startMiningBtn.disabled = false;
-            
-            // Show completion notification
-            alert('Mining session completed! Please claim your rewards.');
+            miningSpeed.textContent = '0';
         }
         
-        startMiningBtn.addEventListener('click', startMining);
-        claimBtn.addEventListener('click', () => {
-            alert('Rewards of ₦1,250 have been credited to your account!');
-        });
-        
         // ICO Countdown Timer
-        const icoTimer = document.getElementById('icoTimer');
-        
-        // Set ICO end date (7 days from now)
-        const icoEndDate = new Date();
-        icoEndDate.setDate(icoEndDate.getDate() + 7);
-        
         function updateIcoTimer() {
+            // Set ICO end date (120 days from now)
+            const icoEndDate = new Date();
+            icoEndDate.setDate(icoEndDate.getDate() + 120);
+            
             const now = new Date();
             const diff = icoEndDate - now;
             
@@ -616,45 +793,45 @@
             }
             
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000;
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
             icoTimer.textContent = 
-                `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                `${days.toString().padStart(3, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
         
-        setInterval(updateIcoTimer, 1000);
-        updateIcoTimer();
-        
         // Admin Panel Logic
-        const adminPanel = document.getElementById('adminPanel');
-        const adminCloseBtn = document.getElementById('adminCloseBtn');
-        
-        // Check if admin route
-        if (window.location.pathname === '/admin') {
-            document.body.classList.add('no-scroll');
+        function showAdminPanel() {
             adminPanel.style.display = 'block';
         }
         
         adminCloseBtn.addEventListener('click', () => {
-            document.body.classList.remove('no-scroll');
             adminPanel.style.display = 'none';
-            window.history.pushState({}, '', '/');
         });
         
-        // Prevent scrolling on mobile
-        document.addEventListener('touchmove', (e) => {
-            if (adminPanel.style.display === 'block') {
-                e.preventDefault();
+        adminLoginBtn.addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            
+            // Very basic admin auth (in production, use proper authentication)
+            if (password === 'admin123') {
+                alert('Admin login successful');
+                adminPanel.style.display = 'none';
+                // Here you would show the actual admin panel
+            } else {
+                alert('Invalid admin password');
             }
-        }, { passive: false });
+        });
         
-        // Initialize with mining inactive for demo
-        // In production, this would check server status
-        setTimeout(() => {
-            startMining();
-        }, 2000);
+        // Initialize
+        updateIcoTimer();
+        setInterval(updateIcoTimer, 1000);
+        
+        // Hide admin panel initially
+        adminPanel.style.display = 'none';
+        
+        // For demo purposes, show auth screen first
+        authScreen.classList.remove('hidden');
     </script>
 </body>
 </html>
