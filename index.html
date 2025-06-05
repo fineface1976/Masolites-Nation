@@ -50,6 +50,21 @@
             height: 120px;
         }
         
+        .header-content {
+            position: relative;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: transparent;
+            border: none;
+            color: var(--accent);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
         h1 {
             font-size: 1.8rem;
             margin-bottom: 0.3rem;
@@ -479,13 +494,16 @@
     <!-- Main App (hidden initially) -->
     <div class="hidden" id="appContainer">
         <header>
-            <h1>MASOLITES NATION</h1>
-            <div class="tagline">Building Trust & A Better Society Together</div>
-            <div class="badge-container">
-                <span class="badge">🥉</span>
-                <span class="badge">🥈</span>
-                <span class="badge">🥇</span>
-                <span class="badge">🎁</span>
+            <div class="header-content">
+                <button class="logout-btn" id="logoutBtn">SIGN OUT</button>
+                <h1>MASOLITES NATION</h1>
+                <div class="tagline">Building Trust & A Better Society Together</div>
+                <div class="badge-container">
+                    <span class="badge">🥉</span>
+                    <span class="badge">🥈</span>
+                    <span class="badge">🥇</span>
+                    <span class="badge">🎁</span>
+                </div>
             </div>
         </header>
         
@@ -517,7 +535,7 @@
                     </div>
                 </div>
                 
-                <button class="btn btn-primary">BUY MAZOL TOKENS NOW</button>
+                <button class="btn btn-primary" id="buyBtn">BUY MAZOL TOKENS NOW</button>
             </section>
             
             <!-- Mining Section -->
@@ -557,7 +575,6 @@
                 <a href="#" class="footer-link">Terms</a>
                 <a href="#" class="footer-link">Privacy</a>
                 <a href="#" class="footer-link">Contact</a>
-                <button class="footer-link" id="logoutBtn">Sign Out</button>
             </div>
         </footer>
     </div>
@@ -591,6 +608,10 @@
         const continueBtn = document.getElementById('continueBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         
+        // App Elements
+        const buyBtn = document.getElementById('buyBtn');
+        const upgradeBtn = document.getElementById('upgradeBtn');
+        
         // Admin Elements
         const adminLoginBtn = document.getElementById('adminLoginBtn');
         const adminCloseBtn = document.getElementById('adminCloseBtn');
@@ -613,8 +634,8 @@
         let tokens = 0;
         let miningSpeedValue = 0;
         
-        // Registered users (in production, this would be server-side)
-        const registeredUsers = [];
+        // Registered users storage
+        const registeredUsers = JSON.parse(localStorage.getItem('masolitesUsers')) || [];
         
         // Event Listeners
         showRegister.addEventListener('click', (e) => {
@@ -630,8 +651,8 @@
         });
         
         loginBtn.addEventListener('click', () => {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
             
             // Basic validation
             if (!email || !password) {
@@ -639,22 +660,26 @@
                 return;
             }
             
-            // Check if user exists (in production, this would be server-side)
-            const user = registeredUsers.find(u => u.email === email && u.password === password);
+            // Check if user exists
+            const user = registeredUsers.find(u => u.email === email);
             
-            if (user) {
+            if (user && user.password === password) {
                 currentUser = user;
                 authScreen.classList.add('hidden');
                 welcomeScreen.classList.remove('hidden');
+                
+                // Clear login form
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
             } else {
                 alert('Invalid email or password');
             }
         });
         
         registerBtn.addEventListener('click', () => {
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirm = document.getElementById('registerConfirm').value;
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const confirm = document.getElementById('registerConfirm').value.trim();
             
             // Basic validation
             if (!email || !password || !confirm) {
@@ -673,20 +698,29 @@
                 return;
             }
             
-            // Register user (in production, this would be server-side)
+            // Register user
             const newUser = {
                 email,
                 password,
-                membership: 'free', // Default to free membership
-                badge: '🎁' // Gift badge for free members
+                membership: 'free',
+                badge: '🎁',
+                joined: new Date().toISOString()
             };
             
             registeredUsers.push(newUser);
+            localStorage.setItem('masolitesUsers', JSON.stringify(registeredUsers));
+            
             currentUser = newUser;
             
             // Show welcome screen
             authScreen.classList.add('hidden');
+            registerContainer.classList.add('hidden');
             welcomeScreen.classList.remove('hidden');
+            
+            // Clear registration form
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('registerConfirm').value = '';
         });
         
         continueBtn.addEventListener('click', () => {
@@ -695,18 +729,29 @@
         });
         
         logoutBtn.addEventListener('click', () => {
-            currentUser = null;
-            appContainer.classList.add('hidden');
-            authScreen.classList.remove('hidden');
-            loginContainer.classList.remove('hidden');
-            registerContainer.classList.add('hidden');
-            
-            // Reset form fields
-            document.getElementById('loginEmail').value = '';
-            document.getElementById('loginPassword').value = '';
-            document.getElementById('registerEmail').value = '';
-            document.getElementById('registerPassword').value = '';
-            document.getElementById('registerConfirm').value = '';
+            // Confirm logout
+            if (confirm('Are you sure you want to sign out?')) {
+                currentUser = null;
+                appContainer.classList.add('hidden');
+                authScreen.classList.remove('hidden');
+                loginContainer.classList.remove('hidden');
+                registerContainer.classList.add('hidden');
+                
+                // Reset mining if active
+                if (isMining) {
+                    stopMining();
+                }
+            }
+        });
+        
+        buyBtn.addEventListener('click', () => {
+            alert('You will be redirected to the token purchase page');
+            // In production, this would redirect to actual purchase flow
+        });
+        
+        upgradeBtn.addEventListener('click', () => {
+            alert('Membership upgrade page will be displayed');
+            // In production, this would show membership upgrade options
         });
         
         // Mining System
@@ -720,7 +765,7 @@
         
         claimBtn.addEventListener('click', () => {
             if (tokens > 0) {
-                alert(`Successfully claimed ${tokens} MAZOL tokens!`);
+                alert(`Successfully claimed ${tokens.toFixed(2)} MAZOL tokens!`);
                 tokens = 0;
                 tokensMined.textContent = '0';
             } else {
@@ -745,6 +790,7 @@
                 // Update timer display
                 if (remaining <= 0) {
                     stopMining();
+                    alert('24-hour mining session completed! Please claim your tokens.');
                     return;
                 }
                 
@@ -830,8 +876,24 @@
         // Hide admin panel initially
         adminPanel.style.display = 'none';
         
-        // For demo purposes, show auth screen first
-        authScreen.classList.remove('hidden');
+        // Check for existing session
+        if (localStorage.getItem('masolitesCurrentUser')) {
+            const userEmail = localStorage.getItem('masolitesCurrentUser');
+            const user = registeredUsers.find(u => u.email === userEmail);
+            
+            if (user) {
+                currentUser = user;
+                authScreen.classList.add('hidden');
+                appContainer.classList.remove('hidden');
+            }
+        }
+        
+        // Save current user on page refresh
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                localStorage.setItem('masolitesCurrentUser', currentUser.email);
+            }
+        });
     </script>
 </body>
 </html>
