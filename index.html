@@ -1,206 +1,660 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MASOLITES NATION - ECOMAS</title>
+    <title>MASOLITES NATION</title>
     <style>
-        /* Professional Color Scheme */
         :root {
-            --primary-dark: #0A2463; /* Deep blue */
-            --primary-light: #3E92CC; /* Light blue */
-            --accent-green: #D8F1A0; /* Lemon green */
-            --accent-orange: #FF9F1C; /* Orange */
-            --text-light: #FFFFFF;
-            --text-dark: #333333;
-            --card-bg: #F8F9FA;
+            --primary: #4a148c;
+            --secondary: #ff6f00;
+            --accent: #ffab40;
+            --text: #f5f5f5;
+            --bg: #121212;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
         }
         
-        /* No-scroll base styling */
-        html, body {
+        * {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        /* Main container with fixed dimensions */
-        .app-container {
-            width: 100vw;
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            touch-action: manipulation;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            background-color: var(--primary-dark);
-            color: var(--text-light);
         }
         
-        /* Header with responsive sizing */
-        .header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+        header {
+            background: linear-gradient(135deg, var(--primary), #6a1b9a);
             padding: 1rem;
             text-align: center;
-            border-bottom: 3px solid var(--accent-green);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
         }
         
-        /* Countdown timer with ICO styling */
-        .countdown-section {
-            background-color: var(--card-bg);
-            border: 2px solid var(--accent-green);
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .badge {
+            font-size: 1.2rem;
+            cursor: default;
+        }
+        
+        main {
+            padding: 1rem;
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             padding: 1rem;
-            margin: 1rem;
             text-align: center;
-            color: var(--text-dark);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
         }
         
-        /* Mining section with toggle button */
-        .mining-section {
-            background-color: var(--card-bg);
-            border: 2px solid var(--accent-orange);
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem;
-            color: var(--text-dark);
+        .stat-card:active {
+            transform: scale(0.98);
         }
         
-        /* Professional button styling */
-        .btn {
-            background-color: var(--accent-green);
-            color: var(--text-dark);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
+        .stat-value {
+            font-size: 1.5rem;
             font-weight: bold;
+            margin: 0.5rem 0;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .mining-section {
+            background: rgba(74, 20, 140, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 111, 0, 0.2);
+        }
+        
+        .mining-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .mining-title {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .mining-status {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .status-inactive {
+            background-color: var(--error);
+            color: white;
+        }
+        
+        .mining-timer {
+            font-size: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+        
+        .mining-progress {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s;
+            margin-top: 1rem;
         }
         
-        /* Add more styles as needed... */
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .ico-section {
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(33, 150, 243, 0.2);
+        }
+        
+        .ico-title {
+            font-size: 1.2rem;
+            color: #2196f3;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .ico-timer {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: monospace;
+            color: #2196f3;
+        }
+        
+        .ico-progress-container {
+            margin: 1.5rem 0;
+        }
+        
+        .ico-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .ico-progress {
+            height: 10px;
+            background: rgba(33, 150, 243, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .ico-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #1976d2, #2196f3);
+            width: 35%;
+        }
+        
+        .news-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .news-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .news-item-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .news-item-date {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .news-item-content {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* Admin panel styles (hidden by default) */
+        .admin-panel {
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .admin-content {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary);
+        }
+        
+        .admin-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            text-align: center;
+        }
+        
+        .admin-form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .admin-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .admin-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .admin-btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .admin-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--error);
+            color: white;
+            border: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.8rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .mining-timer, .ico-timer {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* No scroll behavior */
+        body.no-scroll {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header Section -->
-        <header class="header">
-            <h1>MASOLITES NATION</h1>
-            <p>Building Trust & A Better Society Together</p>
-        </header>
+    <header>
+        <h1>MASOLITES NATION</h1>
+        <div class="tagline">The Future of Community Mining</div>
+        <div class="badge-container">
+            <span class="badge">🥉</span>
+            <span class="badge">🥈</span>
+            <span class="badge">🥇</span>
+            <span class="badge">🎀</span>
+        </div>
+    </header>
+    
+    <main>
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-label">Total Members</div>
+                <div class="stat-value">1,248</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Miners</div>
+                <div class="stat-value">893</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Mined</div>
+                <div class="stat-value">₦4,821,350</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Today's Yield</div>
+                <div class="stat-value">₦127,840</div>
+            </div>
+        </div>
         
-        <!-- Main Content -->
-        <main class="content">
-            <!-- Introduction Pitch -->
-            <section class="intro-section">
-                <h2>Welcome to ECOMAS</h2>
-                <p>Economic Community of MASOLITES. Making things easier for ourselves (the people) is the concept.</p>
-                <!-- More intro text... -->
-            </section>
+        <section class="mining-section">
+            <div class="mining-header">
+                <div class="mining-title">Mining Session</div>
+                <div class="mining-status status-active">ACTIVE</div>
+            </div>
             
-            <!-- Countdown Timer Section -->
-            <section class="countdown-section">
-                <h3>120 Days Private Sale</h3>
-                <div class="countdown-timer">00:00:00:00</div>
-                <button class="btn buy-btn">BUY MAZOL</button>
-            </section>
+            <div class="mining-timer" id="miningTimer">24:00:00.000</div>
             
-            <!-- Mining Section -->
-            <section class="mining-section">
-                <h3>Mining Portal</h3>
-                <div class="mining-counter">0.000000 MZLx/ms</div>
-                <div class="total-mined">Total: 0 MZLx</div>
-                <button class="btn mining-toggle">START MINING</button>
-            </section>
+            <div class="mining-progress">
+                <div class="progress-bar" id="miningProgress"></div>
+            </div>
             
-            <!-- More sections... -->
-        </main>
+            <button class="btn btn-primary" id="startMiningBtn">START MINING</button>
+            <button class="btn btn-secondary" id="claimBtn">CLAIM REWARDS (₦1,250)</button>
+        </section>
         
-        <!-- Footer -->
-        <footer>
-            <!-- Footer content... -->
-        </footer>
+        <section class="ico-section">
+            <div class="ico-title">ICO PHASE 1 ENDS IN</div>
+            <div class="ico-timer" id="icoTimer">07:23:41:15</div>
+            
+            <div class="ico-progress-container">
+                <div class="ico-progress-label">
+                    <span>Progress: 35%</span>
+                    <span>Target: ₦10,000,000</span>
+                </div>
+                <div class="ico-progress">
+                    <div class="ico-progress-bar"></div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary">JOIN ICO NOW</button>
+        </section>
+        
+        <section class="news-section">
+            <div class="news-title">LATEST UPDATES</div>
+            
+            <div class="news-item">
+                <div class="news-item-title">System Maintenance Completed</div>
+                <div class="news-item-date">June 5, 2024 | 14:30 WAT</div>
+                <div class="news-item-content">
+                    The scheduled maintenance has been successfully completed. All mining systems are now operational at 100% capacity.
+                </div>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-item-title">New Membership Badges Introduced</div>
+                <div class="news-item-date">June 3, 2024 | 09:15 WAT</div>
+                <div class="news-item-content">
+                    We've added new achievement badges for top miners. Check your profile to see if you've earned one!
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div>© 2024 Masolites Nation. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="#" class="footer-link">Terms</a>
+            <a href="#" class="footer-link">Privacy</a>
+            <a href="#" class="footer-link">Contact</a>
+            <a href="/admin" class="footer-link">Admin</a>
+        </div>
+    </footer>
+    
+    <!-- Admin Panel (hidden) -->
+    <div class="admin-panel" id="adminPanel">
+        <button class="admin-close" id="adminCloseBtn">×</button>
+        <div class="admin-content">
+            <h2 class="admin-title">ADMIN CONTROL PANEL</h2>
+            
+            <div class="admin-form-group">
+                <label class="admin-label">Mining Session Duration (hours)</label>
+                <input type="number" class="admin-input" value="24" min="1" max="72">
+            </div>
+            
+            <div class="admin-form-group">
+                <label class="admin-label">Daily Yield (₦)</label>
+                <input type="number" class="admin-input" value="1250" min="100" step="50">
+            </div>
+            
+            <div class="admin-form-group">
+                <label class="admin-label">ICO End Date</label>
+                <input type="datetime-local" class="admin-input">
+            </div>
+            
+            <div class="admin-form-group">
+                <label class="admin-label">System Announcement</label>
+                <textarea class="admin-input" rows="4"></textarea>
+            </div>
+            
+            <div class="admin-btn-group">
+                <button class="btn btn-primary">SAVE CHANGES</button>
+                <button class="btn btn-secondary">CANCEL</button>
+            </div>
+        </div>
     </div>
-
+    
     <script>
-        // ================
-        // CORE FUNCTIONALITY
-        // ================
+        // Mining System
+        const miningTimer = document.getElementById('miningTimer');
+        const miningProgress = document.getElementById('miningProgress');
+        const startMiningBtn = document.getElementById('startMiningBtn');
+        const claimBtn = document.getElementById('claimBtn');
         
-        // 1. No-scroll layout enforcement
-        document.addEventListener('DOMContentLoaded', function() {
-            // Ensure no scrolling
-            document.body.style.overflow = 'hidden';
-            
-            // Check viewport fit
-            function checkViewport() {
-                const vh = window.innerHeight;
-                const vw = window.innerWidth;
-                // Adjust elements if needed
-            }
-            window.addEventListener('resize', checkViewport);
-            checkViewport();
-        });
-        
-        // 2. Mining System with 24-hour auto-off
         let miningInterval;
-        let miningActive = false;
-        let miningStartTime;
+        let miningSeconds = 24 * 60 * 60; // 24 hours in seconds
+        let miningMilliseconds = 0;
+        let isMining = false;
         
-        function toggleMining() {
-            const toggleBtn = document.querySelector('.mining-toggle');
+        function updateMiningTimer() {
+            miningMilliseconds -= 10;
             
-            if (!miningActive) {
-                // Start mining
-                miningActive = true;
-                miningStartTime = Date.now();
-                toggleBtn.textContent = 'MINING (ON)';
-                toggleBtn.style.backgroundColor = 'var(--accent-green)';
-                
-                // Millisecond precision counter
-                miningInterval = setInterval(updateMiningCounter, 1);
-                
-                // Auto-off after 24 hours
-                setTimeout(stopMining, 24 * 60 * 60 * 1000);
-            } else {
-                stopMining();
+            if (miningMilliseconds < 0) {
+                miningMilliseconds = 990;
+                miningSeconds--;
             }
+            
+            if (miningSeconds < 0) {
+                stopMining();
+                return;
+            }
+            
+            const hours = Math.floor(miningSeconds / 3600);
+            const minutes = Math.floor((miningSeconds % 3600) / 60);
+            const seconds = miningSeconds % 60;
+            
+            miningTimer.textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${miningMilliseconds.toString().padStart(3, '0')}`;
+            
+            const progressPercent = 100 - ((miningSeconds * 1000 + miningMilliseconds) / (24 * 60 * 60 * 1000) * 100);
+            miningProgress.style.width = `${progressPercent}%`;
+        }
+        
+        function startMining() {
+            if (isMining) return;
+            
+            isMining = true;
+            startMiningBtn.textContent = 'MINING IN PROGRESS';
+            startMiningBtn.disabled = true;
+            
+            // Reset timer to 24 hours
+            miningSeconds = 24 * 60 * 60;
+            miningMilliseconds = 0;
+            
+            miningInterval = setInterval(updateMiningTimer, 10);
         }
         
         function stopMining() {
             clearInterval(miningInterval);
-            miningActive = false;
-            document.querySelector('.mining-toggle').textContent = 'START MINING';
-            document.querySelector('.mining-toggle').style.backgroundColor = 'var(--accent-orange)';
-        }
-        
-        function updateMiningCounter() {
-            // Update millisecond counter
-            const counter = document.querySelector('.mining-counter');
-            const total = document.querySelector('.total-mined');
+            isMining = false;
+            miningTimer.textContent = '24:00:00.000';
+            miningProgress.style.width = '0%';
+            startMiningBtn.textContent = 'START MINING';
+            startMiningBtn.disabled = false;
             
-            // Calculate mining rate (example values)
-            const rate = 0.000001; // MZLx per millisecond
-            const elapsed = Date.now() - miningStartTime;
-            const mined = rate * elapsed;
+            // Show completion notification
+            alert('Mining session completed! Please claim your rewards.');
+        }
+        
+        startMiningBtn.addEventListener('click', startMining);
+        claimBtn.addEventListener('click', () => {
+            alert('Rewards of ₦1,250 have been credited to your account!');
+        });
+        
+        // ICO Countdown Timer
+        const icoTimer = document.getElementById('icoTimer');
+        
+        // Set ICO end date (7 days from now)
+        const icoEndDate = new Date();
+        icoEndDate.setDate(icoEndDate.getDate() + 7);
+        
+        function updateIcoTimer() {
+            const now = new Date();
+            const diff = icoEndDate - now;
             
-            counter.textContent = `${rate.toFixed(6)} MZLx/ms`;
-            total.textContent = `Total: ${mined.toFixed(6)} MZLx`;
+            if (diff <= 0) {
+                icoTimer.textContent = 'ICO ENDED';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000;
+            
+            icoTimer.textContent = 
+                `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
         
-        // 3. Countdown Timer
-        function updateCountdown() {
-            // Implementation for 120-day countdown
-            // ...
+        setInterval(updateIcoTimer, 1000);
+        updateIcoTimer();
+        
+        // Admin Panel Logic
+        const adminPanel = document.getElementById('adminPanel');
+        const adminCloseBtn = document.getElementById('adminCloseBtn');
+        
+        // Check if admin route
+        if (window.location.pathname === '/admin') {
+            document.body.classList.add('no-scroll');
+            adminPanel.style.display = 'block';
         }
         
-        // 4. Admin System (hidden from users)
-        const adminRoutes = ['/admin', '/settings'];
-        if (adminRoutes.includes(window.location.pathname) {
-            // Verify admin privileges
-            // ...
-        }
+        adminCloseBtn.addEventListener('click', () => {
+            document.body.classList.remove('no-scroll');
+            adminPanel.style.display = 'none';
+            window.history.pushState({}, '', '/');
+        });
         
-        // More implementations...
+        // Prevent scrolling on mobile
+        document.addEventListener('touchmove', (e) => {
+            if (adminPanel.style.display === 'block') {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Initialize with mining inactive for demo
+        // In production, this would check server status
+        setTimeout(() => {
+            startMining();
+        }, 2000);
     </script>
 </body>
- </html> 
+</html>
