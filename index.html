@@ -1,1 +1,206 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MASOLITES NATION - ECOMAS</title>
+    <style>
+        /* Professional Color Scheme */
+        :root {
+            --primary-dark: #0A2463; /* Deep blue */
+            --primary-light: #3E92CC; /* Light blue */
+            --accent-green: #D8F1A0; /* Lemon green */
+            --accent-orange: #FF9F1C; /* Orange */
+            --text-light: #FFFFFF;
+            --text-dark: #333333;
+            --card-bg: #F8F9FA;
+        }
+        
+        /* No-scroll base styling */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Main container with fixed dimensions */
+        .app-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+        }
+        
+        /* Header with responsive sizing */
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-green);
+        }
+        
+        /* Countdown timer with ICO styling */
+        .countdown-section {
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-green);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem;
+            text-align: center;
+            color: var(--text-dark);
+        }
+        
+        /* Mining section with toggle button */
+        .mining-section {
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-orange);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem;
+            color: var(--text-dark);
+        }
+        
+        /* Professional button styling */
+        .btn {
+            background-color: var(--accent-green);
+            color: var(--text-dark);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        /* Add more styles as needed... */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>MASOLITES NATION</h1>
+            <p>Building Trust & A Better Society Together</p>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Introduction Pitch -->
+            <section class="intro-section">
+                <h2>Welcome to ECOMAS</h2>
+                <p>Economic Community of MASOLITES. Making things easier for ourselves (the people) is the concept.</p>
+                <!-- More intro text... -->
+            </section>
+            
+            <!-- Countdown Timer Section -->
+            <section class="countdown-section">
+                <h3>120 Days Private Sale</h3>
+                <div class="countdown-timer">00:00:00:00</div>
+                <button class="btn buy-btn">BUY MAZOL</button>
+            </section>
+            
+            <!-- Mining Section -->
+            <section class="mining-section">
+                <h3>Mining Portal</h3>
+                <div class="mining-counter">0.000000 MZLx/ms</div>
+                <div class="total-mined">Total: 0 MZLx</div>
+                <button class="btn mining-toggle">START MINING</button>
+            </section>
+            
+            <!-- More sections... -->
+        </main>
+        
+        <!-- Footer -->
+        <footer>
+            <!-- Footer content... -->
+        </footer>
+    </div>
+
+    <script>
+        // ================
+        // CORE FUNCTIONALITY
+        // ================
+        
+        // 1. No-scroll layout enforcement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure no scrolling
+            document.body.style.overflow = 'hidden';
+            
+            // Check viewport fit
+            function checkViewport() {
+                const vh = window.innerHeight;
+                const vw = window.innerWidth;
+                // Adjust elements if needed
+            }
+            window.addEventListener('resize', checkViewport);
+            checkViewport();
+        });
+        
+        // 2. Mining System with 24-hour auto-off
+        let miningInterval;
+        let miningActive = false;
+        let miningStartTime;
+        
+        function toggleMining() {
+            const toggleBtn = document.querySelector('.mining-toggle');
+            
+            if (!miningActive) {
+                // Start mining
+                miningActive = true;
+                miningStartTime = Date.now();
+                toggleBtn.textContent = 'MINING (ON)';
+                toggleBtn.style.backgroundColor = 'var(--accent-green)';
+                
+                // Millisecond precision counter
+                miningInterval = setInterval(updateMiningCounter, 1);
+                
+                // Auto-off after 24 hours
+                setTimeout(stopMining, 24 * 60 * 60 * 1000);
+            } else {
+                stopMining();
+            }
+        }
+        
+        function stopMining() {
+            clearInterval(miningInterval);
+            miningActive = false;
+            document.querySelector('.mining-toggle').textContent = 'START MINING';
+            document.querySelector('.mining-toggle').style.backgroundColor = 'var(--accent-orange)';
+        }
+        
+        function updateMiningCounter() {
+            // Update millisecond counter
+            const counter = document.querySelector('.mining-counter');
+            const total = document.querySelector('.total-mined');
+            
+            // Calculate mining rate (example values)
+            const rate = 0.000001; // MZLx per millisecond
+            const elapsed = Date.now() - miningStartTime;
+            const mined = rate * elapsed;
+            
+            counter.textContent = `${rate.toFixed(6)} MZLx/ms`;
+            total.textContent = `Total: ${mined.toFixed(6)} MZLx`;
+        }
+        
+        // 3. Countdown Timer
+        function updateCountdown() {
+            // Implementation for 120-day countdown
+            // ...
+        }
+        
+        // 4. Admin System (hidden from users)
+        const adminRoutes = ['/admin', '/settings'];
+        if (adminRoutes.includes(window.location.pathname) {
+            // Verify admin privileges
+            // ...
+        }
+        
+        // More implementations...
+    </script>
+</body>
+ </html> 
